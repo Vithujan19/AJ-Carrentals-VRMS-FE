@@ -31,3 +31,9 @@ Public booking searches and images require an active vehicle to be explicitly pu
 ## Build
 
 Run `npm run build` to generate the static site in `dist/`. Deploy the static assets through LankaHost's supported web hosting/reverse-proxy setup; route API requests to the backend origin and preserve credentialed CORS and HTTPS cookie behavior.
+
+The workflow in `.github/workflows/frontend-ci-cd.yml` runs a CI build with a
+non-production placeholder API URL. Its production job intentionally fails
+and does not deploy. Frontend lint and automated test scripts are not yet
+configured. The shared deployment runbooks are in the backend repository's
+`docs` directory.
