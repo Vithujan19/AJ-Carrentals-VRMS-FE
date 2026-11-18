@@ -66,7 +66,7 @@ export default function VehicleHistoryPanel({ vehicleId, kind }) {
       {error && <div className="alert alert-danger" role="alert">{error}</div>}
       {loading ? (
         <p role="status">Loading {titles[kind]?.toLowerCase()}…</p>
-      ) : kind === 'maintenance' ? (
+      ) : error ? null : kind === 'maintenance' ? (
         <div className="d-grid gap-4">
           <div>
             <h3 className="h6">Service schedule</h3>
@@ -159,7 +159,7 @@ export default function VehicleHistoryPanel({ vehicleId, kind }) {
               <tbody>
                 {result.items.map((entry) => (
                   <tr key={entry.id}>
-                    <td className="text-nowrap">{new Date(entry.createdAt).toLocaleString()}</td>
+                    <td className="text-nowrap">{new Date(entry.occurredAt).toLocaleString()}</td>
                     <td>{entry.action}</td>
                     <td>{entry.actor?.displayName ?? entry.actorIdentifierSnapshot ?? 'System'}</td>
                     <td><details><summary>View changes</summary><pre className="small mt-2 mb-0">{JSON.stringify({

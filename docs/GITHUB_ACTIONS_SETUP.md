@@ -34,7 +34,8 @@ It uploads only the generated `dist/` output, including the SPA fallback
 
 - Pull requests to `main` or legacy `master`: install, run configured lint and
   test scripts when present, build, and check the production API URL. No
-  deployment occurs. This project currently has no lint or test scripts.
+  deployment occurs. The route regression test runs via `npm test`; there is
+  currently no lint script.
 - Pushes to `main`: validate and build; deployment additionally requires
   `ENABLE_PRODUCTION_DEPLOYMENT=true` and production environment approval.
 - Manual run: select the approved `main` ref in GitHub Actions and check

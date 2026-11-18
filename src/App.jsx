@@ -13,6 +13,8 @@ import BookingsPage from './pages/BookingsPage.jsx';
 import BookingDetailPage from './pages/BookingDetailPage.jsx';
 import PublicBookingPage from './pages/PublicBookingPage.jsx';
 import PublicHomePage from './pages/PublicHomePage.jsx';
+import PublicVehiclesPage from './pages/PublicVehiclesPage.jsx';
+import PublicVehicleDetailPage from './pages/PublicVehicleDetailPage.jsx';
 import RentalOperationsPage from './pages/RentalOperationsPage.jsx';
 import RentalOperationDetailPage from './pages/RentalOperationDetailPage.jsx';
 import RentalOperationsSettingsPage from './pages/RentalOperationsSettingsPage.jsx';
@@ -67,12 +69,14 @@ function LoginRoute() {
   return <LoginPage />;
 }
 
-function AppRoutes() {
+export function AppRoutes() {
   const { user } = useAuth();
   return (
     <Routes>
       <Route path="/login" element={<LoginRoute />} />
       <Route path="/" element={<PublicHomePage />} />
+      <Route path="/fleet" element={<PublicVehiclesPage />} />
+      <Route path="/fleet/:id" element={<PublicVehicleDetailPage />} />
       <Route path="/book" element={<PublicBookingPage />} />
       <Route path="/forgot-password" element={<Navigate to="/reset-password" replace />} />
       <Route path="/reset-password" element={<ResetPasswordPage />} />

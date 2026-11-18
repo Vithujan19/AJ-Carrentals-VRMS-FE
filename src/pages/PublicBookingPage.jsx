@@ -11,6 +11,7 @@ export default function PublicBookingPage() {
   const [params] = useSearchParams();
   const initialPickup = params.get('pickup');
   const initialReturn = params.get('return');
+  const vehicleId = params.get('vehicleId');
   const [pickupAt, setPickupAt] = useState(() => initialPickup || defaultTime(24));
   const [returnAt, setReturnAt] = useState(() => initialReturn || defaultTime(48));
   const [vehicles, setVehicles] = useState([]);
@@ -50,6 +51,7 @@ export default function PublicBookingPage() {
         page: '1',
         limit: '100',
       });
+      if (vehicleId) params.set('vehicleId', vehicleId);
       const result = await apiRequest(`/v1/public/vehicles/available?${params}`);
       if (sequence !== searchSequence.current) return;
       setVehicles(result.data.items);
@@ -60,10 +62,19 @@ export default function PublicBookingPage() {
     } finally {
       if (sequence === searchSequence.current) setLoading(false);
     }
-  }, []);
+  }, [vehicleId]);
 
   useEffect(() => {
-    if (initialPickup && initialReturn) void searchDates(initialPickup, initialReturn);
+    if (initialPickup && initialReturn) {
+      setPickupAt(initialPickup);
+      setReturnAt(initialReturn);
+      void searchDates(initialPickup, initialReturn);
+    } else {
+      setLoading(false);
+      setVehicles([]);
+      setSelectedRate(null);
+      setError('');
+    }
     return () => { searchSequence.current += 1; };
   }, [initialPickup, initialReturn, searchDates]);
 
@@ -148,6 +159,7 @@ export default function PublicBookingPage() {
           <p className="eyebrow">AJ CAR RENTALS</p>
           <h1>Find your next rental</h1>
           <p className="text-secondary mb-0">Search dates, choose an available vehicle and send a request. A request is not confirmed until our staff reviews it.</p>
+          {vehicleId && <p className="mt-2 mb-0">Searching for your selected vehicle. <Link to="/book">Search all vehicles</Link></p>}
         </section>
 
         <section className="content-card mb-4">

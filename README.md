@@ -7,7 +7,7 @@ The staff dashboard is at `/portal`, with sign-in at `/login`.
 ## Local development
 
 1. Use Node.js 22 and run `npm install`.
-2. Copy `.env.example` to `.env` and set `VITE_API_BASE_URL` to the backend `/api` origin.
+2. Copy `.env.example` to `.env` and set `VITE_API_BASE_URL` to the backend `/api` origin. A base ending in `/api/v1` is also accepted.
 3. Start the portal with `npm run dev`.
 
 The API must have a provisioned database, a seeded permission catalog, and an administrator account before staff can sign in. The frontend never connects to MySQL.

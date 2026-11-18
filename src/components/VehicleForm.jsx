@@ -269,7 +269,7 @@ export default function VehicleForm({ vehicle, saving, onSubmit, onCancel }) {
                 onChange={(event) => updateField('isPublished', event.target.checked)} />
               <span className="form-check-label">Publish this vehicle for public booking searches</span>
             </label>
-            <small className="text-secondary">Only active vehicles with a current rental rate can appear in searches. Images must also be published individually.</small>
+            <small className="text-secondary">Published active vehicles appear in the public fleet. Date searches also require an applicable active rate and availability. Images must be published individually.</small>
           </div>
         )}
         <div className="col-12">

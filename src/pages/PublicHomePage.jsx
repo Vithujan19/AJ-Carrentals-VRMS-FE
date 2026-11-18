@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { colomboDateTimeToIso, colomboInputValue } from '../date-time.js';
+import PublicFleet from '../components/PublicFleet.jsx';
 
 function defaultTime(hours) {
   return colomboInputValue(new Date(Date.now() + hours * 60 * 60 * 1000));
@@ -32,6 +33,7 @@ export default function PublicHomePage() {
           <Link className="public-brand" to="/"><span className="brand-mark">AJ</span><strong>AJ Car Rentals</strong></Link>
           <nav className="d-flex flex-wrap align-items-center gap-3" aria-label="Main navigation">
             <Link to="/book">Find a vehicle</Link>
+            <Link to="/fleet">Our fleet</Link>
             <Link to="/book#booking-lookup">Check a request</Link>
             <Link to="/login">Staff sign in</Link>
           </nav>
@@ -44,7 +46,7 @@ export default function PublicHomePage() {
             <h1>Find the right car for every journey.</h1>
             <p className="public-site-lead">Choose your dates, explore the available rental options and send us a booking request.</p>
             <div className="d-flex flex-wrap gap-2">
-              <Link className="btn btn-success btn-lg" to="/book">Explore vehicles</Link>
+              <Link className="btn btn-success btn-lg" to="/fleet">Explore vehicles</Link>
               <a className="btn btn-outline-success btn-lg" href="#search">Check your dates</a>
             </div>
           </div>
@@ -70,6 +72,14 @@ export default function PublicHomePage() {
             </form>
             {error && <div className="alert alert-danger mt-3 mb-0" role="alert">{error}</div>}
           </div>
+        </section>
+        <section className="container py-5">
+          <div className="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+            <div><p className="eyebrow">OUR FLEET</p><h2 className="h3 mb-0">Explore our vehicles</h2></div>
+            <Link className="btn btn-outline-success" to="/fleet">View all vehicles</Link>
+          </div>
+          <p className="text-secondary">Browse our published fleet. Availability is checked for your selected dates.</p>
+          <PublicFleet featured />
         </section>
         <section className="container py-5">
           <h2 className="h3 mb-4">How booking works</h2>

@@ -15,16 +15,18 @@ API. Requests are not reservations; staff recheck availability on
 confirmation. The staff dashboard is at `/portal`; existing staff fleet and
 booking routes remain unchanged.
 
-Public booking searches, image delivery and booking submissions require a
-vehicle to be active and explicitly published. Existing vehicles default to
-unpublished; authorized staff can publish them from the vehicle edit form.
-Images must also be published individually. The corresponding backend
-migration must be reviewed and applied before using this version.
+The homepage and `/fleet` catalogue request active, published vehicles from
+the public vehicle API, regardless of current bookings, maintenance or rates.
+Public details and image delivery apply the same publication and lifecycle
+rules. Existing vehicles default to unpublished; authorized staff can publish
+them from the vehicle edit form. Images must also be published individually.
+Booking searches additionally require availability and an applicable active
+rate; requests remain pending until confirmed by staff.
 
-The broader public catalogue, contact and policy pages, Google reviews,
-content management, sitemap and crawler-rendered metadata are not yet
-implemented. Do not treat the current availability endpoint as a complete
-public catalogue.
+Contact and policy pages, Google reviews, content management, sitemap and
+crawler-rendered metadata are not yet implemented. Do not treat the existing
+availability endpoint as a complete public catalogue. Catalogue ordering uses
+the vehicle's last update time, not publication time, which is not recorded.
 
 The Vite application is client-rendered. Dynamic React metadata alone does not
 provide reliable previews to all social crawlers. A deployment-compatible

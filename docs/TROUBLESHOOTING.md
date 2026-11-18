@@ -2,7 +2,7 @@
 
 | Symptom | Checks |
 |---|---|
-| Workflow build fails | Confirm Node.js 22, the committed lockfile, `npm ci`, and a configured `VITE_API_BASE_URL`. There are currently no lint or test scripts. |
+| Workflow build fails | Confirm Node.js 22, the committed lockfile, `npm ci`, and a configured `VITE_API_BASE_URL`. Run `npm test` and `npm run build`; there is currently no lint script. |
 | FTP authentication fails | Verify the frontend account secret names, account status, and that the rotated password was stored in the frontend repository/environment. Do not print the password. |
 | TLS or certificate failure | Verify explicit FTPS on port 21, provider certificate validity, and system time. Do not disable certificate verification or fall back to plain FTP. |
 | Permission denied or wrong destination | Inspect the account's accessible directories and verify `FE_FTP_REMOTE_DIR` points to the frontend document root. The default is `./`. |
