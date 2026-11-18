@@ -66,7 +66,7 @@ export async function apiRequest(path, options = {}) {
     });
   }
 
-  if (response.status === 401 && !options.suppressAuthExpiry) {
+  if (response.status === 401 && !options.suppressAuthExpiry && !path.startsWith('/v1/public/')) {
     window.dispatchEvent(new CustomEvent('auth:expired'));
   }
   if (response.status === 204) {

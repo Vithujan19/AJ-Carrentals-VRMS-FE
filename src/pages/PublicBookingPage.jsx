@@ -59,7 +59,7 @@ export default function PublicBookingPage() {
       const result = await apiRequest(`/v1/public/vehicles/available?${params}`);
       if (sequence !== searchSequence.current) return;
       setVehicles(result.data.items);
-      if (!result.data.items.length) setError('No vehicles with an active rental rate are available for this period.');
+      if (!result.data.items.length) setError(vehicleId ? 'This vehicle is not available for the selected dates. Choose different dates on its calendar.' : 'No vehicles with an active rental rate are available for this period.');
     } catch (requestError) {
       if (sequence !== searchSequence.current) return;
       setError(requestError.message);

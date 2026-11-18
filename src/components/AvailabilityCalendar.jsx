@@ -52,7 +52,14 @@ export default function AvailabilityCalendar({ vehicleId, value, onChange }) {
     const query = new URLSearchParams({ from: range.from, to: range.to });
     apiRequest(`/v1/public/vehicles/${encodeURIComponent(vehicleId)}/calendar?${query}`)
       .then(({ data }) => { if (active) setRanges(data.unavailable); })
-      .catch((err) => { if (active) { setRanges([]); setError(err.message); } })
+      .catch((err) => {
+        if (active) {
+          setRanges([]);
+          setError(err.status === 401 || err.status === 404
+            ? 'Availability is temporarily unavailable. Please try again later or contact us.'
+            : err.message);
+        }
+      })
       .finally(() => { if (active) setLoading(false); });
     return () => { active = false; };
   }, [vehicleId, range.from, range.to, retry]);
@@ -108,7 +115,7 @@ export default function AvailabilityCalendar({ vehicleId, value, onChange }) {
       <div className="availability-grid" role="grid" aria-label="Vehicle availability">
         {WEEKDAYS.map((name) => <div className="availability-weekday" key={name} role="columnheader">{name}</div>)}
         {days.map(({ day, inMonth, past, state }) => {
-          const disabled = past || state === 'booked' || !inMonth;
+          const disabled = past || state === 'booked' || !inMonth || loading || Boolean(error);
           const inRange = selectedStart && selectedEnd && day >= selectedStart && day <= selectedEnd;
           const classes = [
             'availability-day',
