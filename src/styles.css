@@ -1,7 +1,16 @@
 :root {
+  --brand-red: #ed1e24;
+  --brand-red-dark: #c4161b;
+  --brand-ink: #111111;
+  --bs-primary: #ed1e24;
+  --bs-primary-rgb: 237, 30, 36;
+  --bs-link-color: #c4161b;
+  --bs-link-color-rgb: 196, 22, 27;
+  --bs-link-hover-color: #9f1217;
+  --bs-link-hover-color-rgb: 159, 18, 23;
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #183229;
-  background: #f3f6f4;
+  color: #1b1b1d;
+  background: #f4f4f5;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 }
@@ -10,7 +19,7 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background: #f3f6f4;
+  background: #f4f4f5;
 }
 
 .public-site-header,
@@ -30,8 +39,8 @@ body {
   margin-bottom: 1rem;
   place-items: center;
   border-radius: 0.75rem;
-  color: #4b6259;
-  background: #e1ece6;
+  color: #52525a;
+  background: #ececee;
 }
 
 .public-gallery {
@@ -58,7 +67,7 @@ body {
 
 .public-site-header a,
 .public-site-footer a {
-  color: #12342b;
+  color: #111111;
   font-weight: 600;
   text-decoration: none;
 }
@@ -70,12 +79,12 @@ body {
 
 .public-site-hero {
   padding: clamp(4rem, 9vw, 8rem) 0;
-  background: #e1ece6;
+  background: #ececee;
 }
 
 .public-site-hero h1 {
   max-width: 15ch;
-  color: #12342b;
+  color: #111111;
   font-size: clamp(2.5rem, 6vw, 5rem);
   font-weight: 750;
   letter-spacing: -0.035em;
@@ -84,7 +93,7 @@ body {
 .public-site-lead {
   max-width: 42rem;
   margin: 1.25rem 0 2rem;
-  color: #315746;
+  color: #3f3f46;
   font-size: 1.15rem;
 }
 
@@ -93,14 +102,14 @@ body {
 }
 
 .public-site-footer {
-  border-top: 1px solid #e3ebe6;
-  color: #12342b;
+  border-top: 1px solid #e4e4e7;
+  color: #111111;
 }
 
 .portal-header {
   padding: 1rem 0;
   color: #fff;
-  background: #12342b;
+  background: #111111;
 }
 
 .brand-lockup {
@@ -115,12 +124,12 @@ body {
 }
 
 .brand-lockup small {
-  color: #668078;
+  color: #6b6b73;
   font-size: 0.75rem;
 }
 
 .portal-header .brand-lockup small {
-  color: #b6c8c0;
+  color: #c9c9ce;
 }
 
 .brand-mark {
@@ -129,8 +138,8 @@ body {
   height: 2.6rem;
   place-items: center;
   border-radius: 0.8rem;
-  color: #12342b;
-  background: #d7ed9f;
+  color: #fff;
+  background: #ed1e24;
   font-weight: 800;
 }
 
@@ -148,14 +157,14 @@ body {
 .portal-nav-link {
   padding: 0.75rem 1rem;
   border-radius: 0.65rem;
-  color: #4b6259;
+  color: #52525a;
   text-decoration: none;
 }
 
 .portal-nav-link:hover,
 .portal-nav-link.active {
-  color: #12342b;
-  background: #e1ece6;
+  color: #111111;
+  background: #ececee;
   font-weight: 600;
 }
 
@@ -174,14 +183,14 @@ body {
 
 .page-heading h1 {
   margin: 0;
-  color: #173a2f;
+  color: #111111;
   font-size: clamp(1.7rem, 3vw, 2.2rem);
   font-weight: 700;
 }
 
 .eyebrow {
   margin-bottom: 0.35rem;
-  color: #668078;
+  color: #6b6b73;
   font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.13em;
@@ -189,10 +198,10 @@ body {
 
 .content-card {
   padding: 1.4rem;
-  border: 1px solid #e3ebe6;
+  border: 1px solid #e4e4e7;
   border-radius: 1rem;
   background: #fff;
-  box-shadow: 0 8px 26px rgb(24 50 41 / 4%);
+  box-shadow: 0 8px 26px rgb(0 0 0 / 5%);
 }
 
 .content-card .table {
@@ -205,20 +214,20 @@ body {
   flex: 0 0 auto;
   border-radius: 0.55rem;
   object-fit: cover;
-  background: #e8efea;
+  background: #ececee;
 }
 
 .vehicle-thumb-empty {
   display: grid;
   place-items: center;
-  color: #466257;
+  color: #52525a;
   font-size: 0.8rem;
   font-weight: 700;
 }
 
 .vehicle-media-card {
   overflow: hidden;
-  border: 1px solid #e3ebe6;
+  border: 1px solid #e4e4e7;
   border-radius: 0.8rem;
   background: #fff;
 }
@@ -228,7 +237,7 @@ body {
   width: 100%;
   height: 12rem;
   object-fit: cover;
-  background: #eef2ef;
+  background: #f1f1f3;
 }
 
 .vehicle-detail-grid {
@@ -249,11 +258,11 @@ body {
 
 .vehicle-tabs .nav-link {
   flex: 0 0 auto;
-  color: #4b6259;
+  color: #52525a;
 }
 
 .vehicle-tabs .nav-link.active {
-  color: #12342b;
+  color: #111111;
   font-weight: 600;
 }
 
@@ -268,8 +277,8 @@ body {
 .permission-tags span {
   padding: 0.25rem 0.5rem;
   border-radius: 999px;
-  color: #315746;
-  background: #edf5ef;
+  color: #3f3f46;
+  background: #f1f1f3;
   font-size: 0.72rem;
 }
 
@@ -283,7 +292,7 @@ body {
   display: flex;
   gap: 0.7rem;
   padding: 0.75rem;
-  border: 1px solid #e7eee9;
+  border: 1px solid #e4e4e7;
   border-radius: 0.6rem;
 }
 
@@ -298,7 +307,7 @@ body {
 
 .permission-option small {
   margin-top: 0.2rem;
-  color: #687b72;
+  color: #6b6b73;
 }
 
 .session-list {
@@ -312,8 +321,8 @@ body {
   padding: 1.5rem;
   place-items: center;
   background:
-    radial-gradient(ellipse at 20% 15%, rgb(215 237 159 / 28%), transparent 30rem),
-    linear-gradient(135deg, #12342b, #1d5140);
+    radial-gradient(ellipse at 20% 15%, rgb(237 30 36 / 24%), transparent 30rem),
+    linear-gradient(135deg, #111111, #2b2b2f);
 }
 
 .login-card {
@@ -325,7 +334,7 @@ body {
 }
 
 .login-card h1 {
-  color: #173a2f;
+  color: #111111;
   font-weight: 700;
 }
 
@@ -353,15 +362,15 @@ body {
   grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 1px;
   overflow: hidden;
-  border: 1px solid #dfe8e2;
+  border: 1px solid #e4e4e7;
   border-radius: 0.75rem;
-  background: #dfe8e2;
+  background: #e4e4e7;
 }
 
 .booking-calendar-weekday {
   padding: 0.55rem;
   color: #536b60;
-  background: #f3f6f4;
+  background: #f4f4f5;
   font-size: 0.75rem;
   font-weight: 700;
   text-align: center;
@@ -375,7 +384,7 @@ body {
 }
 
 .booking-calendar-day.outside-month {
-  background: #f7f9f7;
+  background: #f8f8f9;
 }
 
 .booking-calendar-day.today {
@@ -406,7 +415,7 @@ body {
 }
 
 a.booking-calendar-event:hover {
-  color: #12342b;
+  color: #111111;
   filter: brightness(0.96);
 }
 
@@ -449,7 +458,7 @@ a.booking-calendar-event:hover {
 
 .public-booking-page {
   min-height: 100vh;
-  background: #f3f6f4;
+  background: #f4f4f5;
 }
 
 .public-booking-header {
@@ -462,7 +471,7 @@ a.booking-calendar-event:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  color: #173a2f;
+  color: #111111;
   text-decoration: none;
 }
 
@@ -471,13 +480,13 @@ a.booking-calendar-event:hover {
 }
 
 .public-booking-hero h1 {
-  color: #173a2f;
+  color: #111111;
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 750;
 }
 
 .public-vehicle-card {
-  border: 1px solid #e3ebe6;
+  border: 1px solid #e4e4e7;
   transition: border-color 120ms ease, box-shadow 120ms ease;
 }
 
@@ -493,7 +502,7 @@ a.booking-calendar-event:hover {
   max-width: calc(100% + 2.8rem);
   object-fit: cover;
   border-radius: 1rem 1rem 0 0;
-  background: #eef2ef;
+  background: #f1f1f3;
 }
 
 .white-space-pre-wrap {
@@ -539,4 +548,285 @@ a.booking-calendar-event:hover {
   .booking-calendar-event span {
     display: none !important;
   }
+}
+
+.publication-switch .form-check-input {
+  width: 3.25rem;
+  height: 1.7rem;
+  cursor: pointer;
+}
+
+.publication-preview {
+  border: 1px solid var(--bs-border-color);
+  border-radius: 0.75rem;
+  padding: 1rem;
+}
+
+.publication-preview-image {
+  width: 100%;
+  max-height: 260px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+/* Brand theme (ajcarrentals.lk: red, black, white) */
+.btn-primary {
+  --bs-btn-bg: var(--brand-red);
+  --bs-btn-border-color: var(--brand-red);
+  --bs-btn-hover-bg: var(--brand-red-dark);
+  --bs-btn-hover-border-color: var(--brand-red-dark);
+  --bs-btn-active-bg: #9f1217;
+  --bs-btn-active-border-color: #9f1217;
+  --bs-btn-disabled-bg: var(--brand-red);
+  --bs-btn-disabled-border-color: var(--brand-red);
+  --bs-btn-focus-shadow-rgb: 237, 30, 36;
+}
+
+.btn-outline-primary {
+  --bs-btn-color: var(--brand-red-dark);
+  --bs-btn-border-color: var(--brand-red);
+  --bs-btn-hover-bg: var(--brand-red);
+  --bs-btn-hover-border-color: var(--brand-red);
+  --bs-btn-active-bg: var(--brand-red-dark);
+  --bs-btn-active-border-color: var(--brand-red-dark);
+  --bs-btn-focus-shadow-rgb: 237, 30, 36;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus {
+  border-color: #f08a8d;
+  box-shadow: 0 0 0 0.2rem rgb(237 30 36 / 18%);
+}
+
+.form-check-input:checked {
+  border-color: var(--brand-red);
+  background-color: var(--brand-red);
+}
+
+.text-bg-primary {
+  color: #fff !important;
+  background-color: var(--brand-red) !important;
+}
+
+.portal-header {
+  border-bottom: 3px solid var(--brand-red);
+}
+
+.brand-logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  flex: 0 0 auto;
+  border-radius: 50%;
+}
+
+/* Public site redesign */
+.public-site-header {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  border-bottom: 3px solid var(--brand-red);
+  color: #fff;
+  background: #111;
+}
+
+.public-site-header .public-brand,
+.public-site-header .public-nav a {
+  color: #fff;
+}
+
+.public-brand small {
+  display: block;
+  color: #c9c9ce;
+  font-size: 0.7rem;
+  font-weight: 400;
+}
+
+.public-logo {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.public-site-footer {
+  color: #fff;
+  background: #111;
+}
+
+.public-site-footer a {
+  color: #d4d4d8;
+}
+
+.public-site-footer .public-logo {
+  width: 2rem;
+  height: 2rem;
+}
+
+.public-nav {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.public-nav a:not(.btn) {
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.public-nav a.active,
+.public-nav a:not(.btn):hover {
+  border-bottom-color: var(--brand-red);
+  text-decoration: none;
+}
+
+@media (max-width: 991.98px) {
+  .public-site-header .container {
+    flex-wrap: wrap;
+  }
+
+  .public-nav {
+    display: none;
+    flex-basis: 100%;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+    padding: 0.75rem 0 0.5rem;
+  }
+
+  .public-nav.is-open {
+    display: flex;
+  }
+}
+
+.public-site-hero {
+  color: #fff;
+  background-color: #111;
+  background-position: center;
+  background-size: cover;
+}
+
+.public-site-hero h1,
+.public-site-hero .public-site-lead {
+  color: #fff;
+}
+
+.public-site-hero .eyebrow {
+  color: #ff5a5f;
+}
+
+.public-cta {
+  padding: clamp(3rem, 7vw, 6rem) 0;
+  color: #fff;
+  background-color: #111;
+  background-position: center;
+  background-size: cover;
+}
+
+.public-cta h2 {
+  font-weight: 750;
+}
+
+.public-cta p {
+  max-width: 36rem;
+  color: #e4e4e7;
+}
+
+/* Availability calendar */
+.availability-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.25rem;
+}
+
+.availability-weekday {
+  padding: 0.25rem 0;
+  color: #6b6b73;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.availability-day {
+  min-height: 2.75rem;
+  border: 1px solid #d4d4d8;
+  border-radius: 0.5rem;
+  color: #111;
+  background: #fff;
+  touch-action: manipulation;
+}
+
+.availability-day:hover:not(:disabled) {
+  border-color: var(--brand-red);
+}
+
+.availability-day:focus-visible {
+  outline: 3px solid rgb(237 30 36 / 40%);
+  outline-offset: 1px;
+}
+
+.availability-day.is-outside {
+  visibility: hidden;
+}
+
+.availability-day.is-past {
+  color: #a1a1aa;
+  background: #f4f4f5;
+}
+
+.availability-day.is-partial,
+.legend-swatch.is-partial {
+  background: linear-gradient(135deg, #fff 50%, #fecaca 50%);
+}
+
+.availability-day.is-booked,
+.legend-swatch.is-booked {
+  color: #71717a;
+  background: #d4d4d8;
+  text-decoration: line-through;
+}
+
+.availability-day.is-in-range {
+  background: #fee2e2;
+}
+
+.availability-day.is-selected,
+.legend-swatch.is-selected {
+  border-color: var(--brand-red);
+  color: #fff;
+  background: var(--brand-red);
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-right: 0.25rem;
+  border: 1px solid #a1a1aa;
+  border-radius: 0.2rem;
+  background: #fff;
+  vertical-align: -0.1rem;
+}
+
+/* Staff dashboard */
+.dashboard-stat {
+  border-left: 4px solid var(--brand-red);
+  color: inherit;
+}
+
+.dashboard-stat:hover {
+  box-shadow: 0 4px 18px rgb(0 0 0 / 10%);
+}
+
+.dashboard-stat-value {
+  color: #111;
+  font-size: 2.25rem;
+  font-weight: 750;
+  line-height: 1;
+}
+
+.portal-nav-link.active {
+  box-shadow: inset 3px 0 0 var(--brand-red);
 }

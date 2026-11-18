@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { apiRequest } from '../api.js';
 
@@ -39,14 +40,14 @@ export default function ResetPasswordPage() {
     <main className="login-page">
       <section className="login-card">
         <div className="brand-lockup mb-4">
-          <span className="brand-mark">AJ</span>
+          <img className="brand-logo" src={logo} alt="AJ Car Rentals" />
           <span><strong>AJ Car Rentals</strong><small>Staff portal</small></span>
         </div>
         <h1 className="h3">Choose a new password</h1>
         {done ? (
           <>
             <div className="alert alert-success mt-3">Password reset complete. Sign in with your new password.</div>
-            <Link className="btn btn-success w-100" to="/login">Go to sign in</Link>
+            <Link className="btn btn-primary w-100" to="/login">Go to sign in</Link>
           </>
         ) : (
           <>
@@ -81,7 +82,7 @@ export default function ResetPasswordPage() {
                 onChange={(event) => setConfirmPassword(event.target.value)}
                 required
               />
-              <button className="btn btn-success btn-lg w-100" disabled={submitting}>
+              <button className="btn btn-primary btn-lg w-100" disabled={submitting}>
                 {submitting ? 'Updating…' : 'Set password'}
               </button>
             </form>

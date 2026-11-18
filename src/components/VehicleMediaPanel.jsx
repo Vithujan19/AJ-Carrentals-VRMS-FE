@@ -213,7 +213,7 @@ export default function VehicleMediaPanel({ vehicle, user, onChanged }) {
               <small className="text-secondary">JPEG, PNG or WebP; up to 10 files per upload.</small>
             </div>
             <div className="col-12 col-md-4">
-              <button className="btn btn-success w-100" disabled={busy || imageFiles.length === 0}>
+              <button className="btn btn-primary w-100" disabled={busy || imageFiles.length === 0}>
                 {busy ? 'Uploading…' : 'Upload images'}
               </button>
             </div>
@@ -247,7 +247,7 @@ export default function VehicleMediaPanel({ vehicle, user, onChanged }) {
                           onClick={() => moveImage(imageIndex, -1)}>Move up</button>
                         <button className="btn btn-sm btn-outline-secondary" disabled={busy || imageIndex === orderedImages.length - 1}
                           onClick={() => moveImage(imageIndex, 1)}>Move down</button>
-                        <button className="btn btn-sm btn-outline-success" disabled={busy || image.isPrimary}
+                        <button className="btn btn-sm btn-outline-primary" disabled={busy || image.isPrimary}
                           onClick={() => updateImage(image, { isPrimary: true })}>Set primary</button>
                         <button className="btn btn-sm btn-outline-secondary" disabled={busy}
                           onClick={() => updateImage(image, { isPublished: !image.isPublished })}>
@@ -302,7 +302,7 @@ export default function VehicleMediaPanel({ vehicle, user, onChanged }) {
                   onChange={(event) => setDocumentFile(event.target.files[0] ?? null)} required />
               </div>
               <div className="col-12">
-                <button className="btn btn-success" disabled={busy || !documentFile}>
+                <button className="btn btn-primary" disabled={busy || !documentFile}>
                   {busy ? 'Uploading…' : 'Upload / replace document'}
                 </button>
               </div>
@@ -332,7 +332,7 @@ export default function VehicleMediaPanel({ vehicle, user, onChanged }) {
                       </td>
                       <td>{Math.ceil(Number(document.sizeBytes) / 1024)} KB</td>
                       <td className="text-nowrap">
-                        <button className="btn btn-sm btn-outline-success me-2" disabled={busy}
+                        <button className="btn btn-sm btn-outline-primary me-2" disabled={busy}
                           onClick={() => downloadDocument(document)}>Download</button>
                         {canManageDocuments && !vehicle.archivedAt && (
                           <button className="btn btn-sm btn-outline-danger" disabled={busy}

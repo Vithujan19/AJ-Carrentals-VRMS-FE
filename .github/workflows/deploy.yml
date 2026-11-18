@@ -47,11 +47,22 @@ jobs:
         env:
           VITE_API_BASE_URL: ${{ vars.VITE_API_BASE_URL }}
 
+      - name: Validate deployment files
+        run: |
+          test -s dist/.htaccess
+          unexpected="$(find dist -name '.*' ! -name '.htaccess' ! -path dist)"
+          if [ -n "$unexpected" ] || [ -n "$(find dist -type l)" ]; then
+            echo "Unexpected hidden files or symlinks in dist:" >&2
+            echo "$unexpected" >&2
+            exit 1
+          fi
+
       - name: Upload compiled client
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
           name: aj-car-rentals-frontend-dist
           path: dist/
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 1
 
@@ -68,6 +79,9 @@ jobs:
         with:
           name: aj-car-rentals-frontend-dist
           path: dist/
+
+      - name: Verify SPA rewrite file
+        run: test -s dist/.htaccess
 
       - name: Validate deployment configuration
         env:

@@ -92,7 +92,7 @@ export default function VehicleMileagePanel({ vehicle, user, onChanged }) {
                 onChange={(event) => setForm({ ...form, reason: event.target.value })} />
             </div>
             <div className="col-12 col-md-2">
-              <button className={`btn w-100 ${correction ? 'btn-outline-danger' : 'btn-success'}`}
+              <button className={`btn w-100 ${correction ? 'btn-outline-danger' : 'btn-primary'}`}
                 disabled={busy || (correction && !canCorrect)}>
                 {busy ? 'Saving…' : correction ? 'Record correction' : 'Record reading'}
               </button>

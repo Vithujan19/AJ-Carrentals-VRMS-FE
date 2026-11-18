@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { apiRequest } from '../api.js';
 import { useAuth } from '../auth/AuthContext.jsx';
 import VehicleForm from '../components/VehicleForm.jsx';
+import VehiclePublicationPanel from '../components/VehiclePublicationPanel.jsx';
 import VehicleHistoryPanel from '../components/VehicleHistoryPanel.jsx';
 import VehicleMediaPanel from '../components/VehicleMediaPanel.jsx';
 import VehicleMileagePanel from '../components/VehicleMileagePanel.jsx';
@@ -192,7 +193,7 @@ export default function VehicleDetailPage() {
         <div className="d-flex flex-wrap gap-2">
           <button className="btn btn-outline-secondary" onClick={load} disabled={loading}>Refresh</button>
           {canEdit && !editing && (
-            <button className="btn btn-success" onClick={() => setEditing(true)}>Edit vehicle</button>
+            <button className="btn btn-primary" onClick={() => setEditing(true)}>Edit vehicle</button>
           )}
         </div>
       </div>
@@ -220,6 +221,13 @@ export default function VehicleDetailPage() {
 
       {currentTab === 'overview' && (
         <div className="d-grid gap-4">
+          {!editing && !vehicle.archivedAt && (
+            <VehiclePublicationPanel
+              vehicle={vehicle}
+              canPublish={permissions.includes('vehicles.publish')}
+              onChanged={load}
+            />
+          )}
           {editing ? (
             <section className="content-card">
               <h2 className="h5 mb-3">Edit vehicle details</h2>
@@ -346,7 +354,7 @@ export default function VehicleDetailPage() {
                     value={statusReason} onChange={(event) => setStatusReason(event.target.value)} />
                 </div>
                 <div className="col-12 col-md-2">
-                  <button className="btn btn-outline-success w-100" disabled={saving || status === vehicle.status}>Update</button>
+                  <button className="btn btn-outline-primary w-100" disabled={saving || status === vehicle.status}>Update</button>
                 </div>
               </form>
             </section>

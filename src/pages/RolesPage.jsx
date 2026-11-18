@@ -68,7 +68,7 @@ export default function RolesPage() {
     <>
       <div className="page-heading">
         <div><p className="eyebrow">ACCESS MANAGEMENT</p><h1>Roles & permissions</h1></div>
-        {canManage && <button className="btn btn-success" onClick={save} disabled={saving || loading || !selectedRole}>
+        {canManage && <button className="btn btn-primary" onClick={save} disabled={saving || loading || !selectedRole}>
           {saving ? 'Saving…' : 'Save permissions'}
         </button>}
       </div>

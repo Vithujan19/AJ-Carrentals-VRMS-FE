@@ -235,7 +235,7 @@ export default function VehiclePricingPanel({ vehicle, user }) {
                     onChange={(event) => setPackageForm({ ...packageForm, conditions: event.target.value })} />
                 </div>
                 <div className="col-12">
-                  <button className="btn btn-outline-success" disabled={busy}>
+                  <button className="btn btn-outline-primary" disabled={busy}>
                     {busy ? 'Saving…' : 'Create package'}
                   </button>
                 </div>
@@ -306,7 +306,7 @@ export default function VehiclePricingPanel({ vehicle, user }) {
                     onChange={(event) => setRateForm({ ...rateForm, effectiveTo: event.target.value })} />
                 </div>
                 <div className="col-12">
-                  <button className="btn btn-success" disabled={busy || packages.every(({ isActive }) => !isActive)}>
+                  <button className="btn btn-primary" disabled={busy || packages.every(({ isActive }) => !isActive)}>
                     {busy ? 'Saving…' : 'Save rate'}
                   </button>
                 </div>

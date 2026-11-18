@@ -114,7 +114,7 @@ export default function VehiclesPage() {
         <div className="d-flex gap-2">
           <button className="btn btn-outline-secondary" onClick={load} disabled={loading}>Refresh</button>
           {canCreate && (
-            <button className="btn btn-success" onClick={() => setShowCreate((current) => !current)}>
+            <button className="btn btn-primary" onClick={() => setShowCreate((current) => !current)}>
               {showCreate ? 'Close form' : 'Add vehicle'}
             </button>
           )}
@@ -234,7 +234,7 @@ export default function VehiclesPage() {
               onChange={(event) => setFilters({ ...filters, availableTo: event.target.value })} />
           </div>
           <div className="col-12 col-lg-2">
-            <button className="btn btn-outline-success w-100">Apply filters</button>
+            <button className="btn btn-outline-primary w-100">Apply filters</button>
           </div>
         </form>
       </section>
@@ -310,7 +310,7 @@ export default function VehiclesPage() {
                         </td>
                       )}
                       <td>
-                        <Link className="btn btn-sm btn-outline-success"
+                        <Link className="btn btn-sm btn-outline-primary"
                           to={`/vehicles/${vehicle.id}`}>Manage</Link>
                       </td>
                     </tr>

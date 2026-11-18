@@ -219,7 +219,7 @@ export default function RentalOperationsSettingsPage() {
         />
 
         <div className="d-flex justify-content-end">
-          <button type="submit" className="btn btn-success" disabled={saving}>
+          <button type="submit" className="btn btn-primary" disabled={saving}>
             {saving ? 'Saving…' : 'Save settings'}
           </button>
         </div>

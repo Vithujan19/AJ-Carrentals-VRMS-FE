@@ -1,4 +1,5 @@
 import { NavLink, Outlet } from 'react-router-dom';
+import logo from '../assets/logo.png';
 import { useState } from 'react';
 import { useAuth } from '../auth/AuthContext.jsx';
 
@@ -41,7 +42,7 @@ export default function StaffLayout() {
       <header className="portal-header">
         <div className="container-fluid px-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
           <div className="brand-lockup">
-            <span className="brand-mark">AJ</span>
+            <img className="brand-logo" src={logo} alt="AJ Car Rentals" />
             <span>
               <strong>AJ Car Rentals</strong>
               <small>Staff portal</small>

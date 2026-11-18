@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { apiRequest, apiResourceUrl } from '../api.js';
+import PublicLayout from '../components/PublicLayout.jsx';
 import { colomboDateTimeToIso, colomboInputValue, formatColomboDateTime } from '../date-time.js';
 
 function defaultTime(hours) {
@@ -28,6 +29,9 @@ export default function PublicBookingPage() {
   const [lookupError, setLookupError] = useState('');
   const searchSequence = useRef(0);
   const submittingRef = useRef(false);
+  const idempotencyRef = useRef({ fingerprint: '', key: '' });
+  const [whatsappConsent, setWhatsappConsent] = useState(false);
+  const [whatsappOpened, setWhatsappOpened] = useState(false);
 
   const searchDates = useCallback(async (pickup, end) => {
     const sequence = ++searchSequence.current;
@@ -102,9 +106,7 @@ export default function PublicBookingPage() {
     setSubmitting(true);
     setError('');
     try {
-      const result = await apiRequest('/v1/public/booking-requests', {
-        method: 'POST',
-        body: {
+      const payload = {
           vehicleId: selectedRate.vehicle.id,
           rentalPackageId: selectedRate.rate.package.id,
           vehicleRateId: selectedRate.rate.id,
@@ -114,8 +116,20 @@ export default function PublicBookingPage() {
           mobileNumber: contact.mobileNumber,
           email: contact.email.trim() || undefined,
           customerNotes: customerNotes.trim() || null,
-        },
+          whatsappConsent,
+        };
+      // The same key is reused only for an identical retry, so a double click or network retry never creates a duplicate.
+      const fingerprint = JSON.stringify(payload);
+      if (idempotencyRef.current.fingerprint !== fingerprint) {
+        idempotencyRef.current = { fingerprint, key: crypto.randomUUID() };
+      }
+      const result = await apiRequest('/v1/public/booking-requests', {
+        method: 'POST',
+        headers: { 'Idempotency-Key': idempotencyRef.current.key },
+        body: payload,
       });
+      idempotencyRef.current = { fingerprint: '', key: '' };
+      setWhatsappOpened(false);
       setSuccess(result.data);
       setLookup({ reference: result.data.reference, token: result.data.lookupToken });
       setSelectedRate(null);
@@ -126,6 +140,14 @@ export default function PublicBookingPage() {
       submittingRef.current = false;
       setSubmitting(false);
     }
+  };
+
+  const openedWhatsApp = () => {
+    setWhatsappOpened(true);
+    apiRequest(`/v1/public/booking-requests/${encodeURIComponent(success.reference)}/whatsapp-opened`, {
+      method: 'POST',
+      body: { token: success.lookupToken },
+    }).catch(() => {});
   };
 
   const findBooking = async (event) => {
@@ -147,13 +169,7 @@ export default function PublicBookingPage() {
   };
 
   return (
-    <main className="public-booking-page">
-      <header className="public-booking-header">
-        <div className="container d-flex flex-wrap justify-content-between align-items-center gap-3">
-          <Link className="public-brand" to="/"><span className="brand-mark">AJ</span><strong>AJ Car Rentals</strong></Link>
-          <a className="btn btn-outline-success" href="#booking-lookup">Check a booking</a>
-        </div>
-      </header>
+    <PublicLayout className="public-page">
       <div className="container py-5">
         <section className="public-booking-hero mb-4">
           <p className="eyebrow">AJ CAR RENTALS</p>
@@ -175,7 +191,7 @@ export default function PublicBookingPage() {
                 value={returnAt} onChange={(event) => { invalidateSearch(); setReturnAt(event.target.value); }} />
             </div>
             <div className="col-12 col-md-2 d-grid">
-              <button className="btn btn-success" disabled={loading}>
+              <button className="btn btn-primary" disabled={loading}>
                 {loading ? 'Searching…' : 'Find vehicles'}
               </button>
             </div>
@@ -209,7 +225,7 @@ export default function PublicBookingPage() {
                         const selected = selectedRate?.rate.id === rate.id;
                         return (
                           <button type="button" key={rate.id}
-                            className={`btn text-start ${selected ? 'btn-success' : 'btn-outline-success'}`}
+                            className={`btn text-start ${selected ? 'btn-primary' : 'btn-outline-primary'}`}
                             onClick={() => setSelectedRate({ vehicle, rate })}>
                             <strong className="d-block">{rate.package.name}</strong>
                             <span>{rate.currency} {rate.rentalPrice} / {rate.package.durationCount} {rate.package.rentalPeriod.toLowerCase()}</span>
@@ -260,8 +276,20 @@ export default function PublicBookingPage() {
                 <textarea id="public-notes" className="form-control" rows="2" maxLength={4000}
                   value={customerNotes} onChange={(event) => setCustomerNotes(event.target.value)} />
               </div>
+              <div className="col-12">
+                <div className="form-check">
+                  <input id="public-whatsapp-consent" className="form-check-input" type="checkbox"
+                    checked={whatsappConsent} onChange={(event) => setWhatsappConsent(event.target.checked)} />
+                  <label className="form-check-label" htmlFor="public-whatsapp-consent">
+                    I agree to receive WhatsApp messages about this booking on the mobile number above (optional). I can withdraw consent at any time.
+                  </label>
+                </div>
+                <p className="small text-secondary mt-2 mb-0">
+                  This is a booking request only. It is not confirmed until our team approves it.
+                </p>
+              </div>
               <div className="col-12 d-flex justify-content-end">
-                <button className="btn btn-success" disabled={submitting}>
+                <button className="btn btn-primary" disabled={submitting}>
                   {submitting ? 'Submitting…' : 'Submit pending request'}
                 </button>
               </div>
@@ -276,7 +304,21 @@ export default function PublicBookingPage() {
             <p>Estimated rental quote: <strong>{success.currency} {success.estimatedTotal}</strong>. Security deposit is separate and is not included in the rental quote.</p>
             <label className="form-label" htmlFor="public-lookup-token">Private lookup token — save it now</label>
             <input id="public-lookup-token" className="form-control font-monospace" readOnly value={success.lookupToken} />
-            <p className="small mt-2 mb-0">The token is shown only once here and is also emailed when email delivery is configured.</p>
+            <p className="small mt-2 mb-3">The token is shown only once here and is also emailed when email delivery is configured.</p>
+            {success.whatsappUrl ? (
+              <>
+                <a className="btn btn-primary" href={success.whatsappUrl} target="_blank" rel="noopener noreferrer"
+                  onClick={openedWhatsApp}>
+                  Send Booking Request via WhatsApp
+                </a>
+                <p className="small mt-2 mb-0">
+                  Opening WhatsApp pre-fills a message with your reference. You must press send in WhatsApp; this does not confirm your booking.
+                  {whatsappOpened && ' WhatsApp was opened on this device.'}
+                </p>
+              </>
+            ) : (
+              <p className="mb-0">Our team will contact you on the mobile number you provided. Please keep your reference handy.</p>
+            )}
           </section>
         )}
 
@@ -297,7 +339,7 @@ export default function PublicBookingPage() {
                 onChange={(event) => setLookup({ ...lookup, token: event.target.value })} />
             </div>
             <div className="col-12 col-md-2 d-grid align-items-end">
-              <button className="btn btn-outline-success" disabled={lookupLoading}>
+              <button className="btn btn-outline-primary" disabled={lookupLoading}>
                 {lookupLoading ? 'Checking…' : 'Look up'}
               </button>
             </div>
@@ -314,6 +356,6 @@ export default function PublicBookingPage() {
           )}
         </section>
       </div>
-    </main>
+    </PublicLayout>
   );
 }

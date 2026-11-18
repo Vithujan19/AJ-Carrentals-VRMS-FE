@@ -74,7 +74,7 @@ export default function RentalOperationsPage() {
             <div className="col-6 col-xl-3" key={item.value}>
               <button
                 type="button"
-                className={`btn w-100 h-100 text-start p-3 ${bucket === item.value ? 'btn-success' : 'btn-outline-success'}`}
+                className={`btn w-100 h-100 text-start p-3 ${bucket === item.value ? 'btn-primary' : 'btn-outline-primary'}`}
                 onClick={() => selectBucket(item.value)}
               >
                 <span className="d-block small">{item.label}</span>
@@ -99,7 +99,7 @@ export default function RentalOperationsPage() {
             />
           </div>
           <div className="col-12 col-md-auto">
-            <button type="submit" className="btn btn-outline-success">Search</button>
+            <button type="submit" className="btn btn-outline-primary">Search</button>
           </div>
         </form>
 
@@ -138,7 +138,7 @@ export default function RentalOperationsPage() {
                       <td>{formatColomboDateTime(booking.returnAt)}</td>
                       <td><span className={`badge ${statusClass(booking)}`}>{booking.isOverdue ? 'OVERDUE' : booking.status.replace('_', ' ')}</span></td>
                       <td className="text-end">
-                        <Link className="btn btn-sm btn-outline-success" to={`/rental-operations/${booking.id}`}>
+                        <Link className="btn btn-sm btn-outline-primary" to={`/rental-operations/${booking.id}`}>
                           Open
                         </Link>
                       </td>

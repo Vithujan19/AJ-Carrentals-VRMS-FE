@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { apiRequest, apiResourceUrl } from '../api.js';
+import AvailabilityCalendar from '../components/AvailabilityCalendar.jsx';
+import PublicLayout from '../components/PublicLayout.jsx';
 
 export default function PublicVehicleDetailPage() {
   const { id } = useParams();
@@ -8,6 +10,7 @@ export default function PublicVehicleDetailPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [retry, setRetry] = useState(0);
+  const [dates, setDates] = useState(null);
   useEffect(() => {
     let active = true;
     setLoading(true);
@@ -23,10 +26,7 @@ export default function PublicVehicleDetailPage() {
   const spec = vehicle?.specification;
   const name = [spec?.make, spec?.model, spec?.variant].filter(Boolean).join(' ') || 'Vehicle';
   return (
-    <main className="public-booking-page">
-      <header className="public-booking-header"><div className="container">
-        <Link className="public-brand" to="/"><span className="brand-mark">AJ</span><strong>AJ Car Rentals</strong></Link>
-      </div></header>
+    <PublicLayout className="public-page">
       <div className="container py-5">
         <Link to="/fleet">← Back to vehicles</Link>
         {loading && <p className="mt-4" role="status">Loading vehicle…</p>}
@@ -55,12 +55,19 @@ export default function PublicVehicleDetailPage() {
                   {rate.package.conditions && <p className="small mt-2 mb-0">{rate.package.conditions}</p>}
                 </div>
               ))}
-              <p className="text-secondary">Availability and rates are checked for your selected dates. Requests require staff confirmation.</p>
-              <Link className="btn btn-success" to={`/book?vehicleId=${encodeURIComponent(vehicle.id)}`}>Check availability and book</Link>
+              <h2 className="h4 mt-4">Availability</h2>
+              <div className="content-card mb-3">
+                <AvailabilityCalendar vehicleId={vehicle.id} value={dates} onChange={setDates} />
+              </div>
+              <p className="text-secondary">This is a booking request, not a confirmed reservation. Our team confirms availability and rates before your booking is final.</p>
+              <Link className="btn btn-primary"
+                to={`/book?vehicleId=${encodeURIComponent(vehicle.id)}${dates ? `&pickup=${encodeURIComponent(dates.pickup)}&return=${encodeURIComponent(dates.return)}` : ''}`}>
+                {dates ? 'Request these dates' : 'Check availability and book'}
+              </Link>
             </div>
           </div>
         )}
       </div>
-    </main>
+    </PublicLayout>
   );
 }

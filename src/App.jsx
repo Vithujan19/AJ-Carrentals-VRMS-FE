@@ -23,7 +23,7 @@ import StaffLayout from './components/StaffLayout.jsx';
 function SessionLoading() {
   return (
     <main className="container min-vh-100 d-flex align-items-center justify-content-center">
-      <div className="spinner-border text-success" role="status">
+      <div className="spinner-border text-danger" role="status">
         <span className="visually-hidden">Loading session</span>
       </div>
     </main>

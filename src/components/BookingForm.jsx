@@ -138,7 +138,7 @@ export default function BookingForm({ permissions, saving, onSubmit, onCancel })
           value={returnAt} onChange={(event) => setReturnAt(event.target.value)} />
       </div>
       <div className="col-12">
-        <button type="button" className="btn btn-outline-success" onClick={searchVehicles}
+        <button type="button" className="btn btn-outline-primary" onClick={searchVehicles}
           disabled={availabilityLoading}>
           {availabilityLoading ? 'Checking availability…' : 'Search available vehicles'}
         </button>
@@ -322,7 +322,7 @@ export default function BookingForm({ permissions, saving, onSubmit, onCancel })
       )}
       <div className="col-12 d-flex flex-wrap gap-2 justify-content-end">
         <button className="btn btn-outline-secondary" type="button" onClick={onCancel} disabled={saving}>Close</button>
-        <button className="btn btn-success" type="submit" disabled={saving || !selectedRateId}>
+        <button className="btn btn-primary" type="submit" disabled={saving || !selectedRateId}>
           {saving ? 'Saving booking…' : status === 'CONFIRMED' ? 'Create and confirm' : 'Create pending booking'}
         </button>
       </div>

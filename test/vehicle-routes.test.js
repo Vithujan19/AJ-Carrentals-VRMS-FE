@@ -29,6 +29,6 @@ function renderRoute(path) {
 test('staff vehicle routes stay protected and do not resolve to the public fleet', () => {
   assert.match(renderRoute('/vehicles'), /Loading session/);
   assert.match(renderRoute('/vehicles/vehicle-id'), /Loading session/);
-  assert.match(renderRoute('/fleet'), /Our fleet/);
+  assert.match(renderRoute('/fleet'), /Our Vehicles/);
   assert.match(renderRoute('/fleet/vehicle-id'), /Loading vehicle/);
 });

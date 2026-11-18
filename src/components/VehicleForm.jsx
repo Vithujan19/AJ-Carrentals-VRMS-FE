@@ -28,7 +28,6 @@ function formFromVehicle(vehicle) {
     acquisitionDate: vehicle?.acquisitionDate?.slice(0, 10) ?? '',
     description: vehicle?.description ?? '',
     publicDescription: vehicle?.publicDescription ?? '',
-    isPublished: vehicle?.isPublished ?? false,
     internalNotes: vehicle?.internalNotes ?? '',
     currentOdometerKm: '',
     initialOdometerReason: '',
@@ -106,7 +105,6 @@ export default function VehicleForm({ vehicle, saving, onSubmit, onCancel }) {
           .filter(Boolean),
       },
     };
-    if (editing) payload.isPublished = fields.isPublished;
     if (!editing && fields.currentOdometerKm !== '') {
       payload.currentOdometerKm = Number(fields.currentOdometerKm);
       payload.initialOdometerReason = fields.initialOdometerReason.trim();
@@ -262,16 +260,6 @@ export default function VehicleForm({ vehicle, saving, onSubmit, onCancel }) {
             value={form.publicDescription}
             onChange={(event) => updateField('publicDescription', event.target.value)} />
         </div>
-        {editing && (
-          <div className="col-12">
-            <label className="form-check">
-              <input className="form-check-input" type="checkbox" checked={form.isPublished}
-                onChange={(event) => updateField('isPublished', event.target.checked)} />
-              <span className="form-check-label">Publish this vehicle for public booking searches</span>
-            </label>
-            <small className="text-secondary">Published active vehicles appear in the public fleet. Date searches also require an applicable active rate and availability. Images must be published individually.</small>
-          </div>
-        )}
         <div className="col-12">
           <label className="form-label" htmlFor="vehicle-internal-notes">Internal notes</label>
           <textarea id="vehicle-internal-notes" className="form-control" rows="2" maxLength={12000}
@@ -298,7 +286,7 @@ export default function VehicleForm({ vehicle, saving, onSubmit, onCancel }) {
       </div>
       <div className="d-flex justify-content-end gap-2 mt-4">
         {onCancel && <button type="button" className="btn btn-outline-secondary" onClick={onCancel}>Cancel</button>}
-        <button className="btn btn-success" disabled={saving}>
+        <button className="btn btn-primary" disabled={saving}>
           {saving ? 'Saving…' : editing ? 'Save vehicle' : 'Create vehicle'}
         </button>
       </div>

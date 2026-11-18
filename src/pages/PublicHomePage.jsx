@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { colomboDateTimeToIso, colomboInputValue } from '../date-time.js';
 import PublicFleet from '../components/PublicFleet.jsx';
+import PublicLayout from '../components/PublicLayout.jsx';
+import heroImage from '../assets/cover1.jpeg';
+import ctaImage from '../assets/car-br.jpeg';
 
 function defaultTime(hours) {
   return colomboInputValue(new Date(Date.now() + hours * 60 * 60 * 1000));
@@ -27,27 +30,15 @@ export default function PublicHomePage() {
   }
 
   return (
-    <div className="public-site">
-      <header className="public-site-header">
-        <div className="container d-flex flex-wrap justify-content-between align-items-center gap-3">
-          <Link className="public-brand" to="/"><span className="brand-mark">AJ</span><strong>AJ Car Rentals</strong></Link>
-          <nav className="d-flex flex-wrap align-items-center gap-3" aria-label="Main navigation">
-            <Link to="/book">Find a vehicle</Link>
-            <Link to="/fleet">Our fleet</Link>
-            <Link to="/book#booking-lookup">Check a request</Link>
-            <Link to="/login">Staff sign in</Link>
-          </nav>
-        </div>
-      </header>
-      <main>
-        <section className="public-site-hero">
+    <PublicLayout>
+        <section className="public-site-hero" style={{ backgroundImage: `linear-gradient(90deg, rgb(0 0 0 / 88%), rgb(0 0 0 / 55%)), url(${heroImage})` }}>
           <div className="container">
             <p className="eyebrow">AJ CAR RENTALS</p>
-            <h1>Find the right car for every journey.</h1>
+            <h1>The best from the best.</h1>
             <p className="public-site-lead">Choose your dates, explore the available rental options and send us a booking request.</p>
             <div className="d-flex flex-wrap gap-2">
-              <Link className="btn btn-success btn-lg" to="/fleet">Explore vehicles</Link>
-              <a className="btn btn-outline-success btn-lg" href="#search">Check your dates</a>
+              <Link className="btn btn-primary btn-lg" to="/fleet">Explore vehicles</Link>
+              <a className="btn btn-outline-light btn-lg" href="#search">Check your dates</a>
             </div>
           </div>
         </section>
@@ -67,7 +58,7 @@ export default function PublicHomePage() {
                   onChange={(event) => setReturnAt(event.target.value)} required />
               </div>
               <div className="col-12 col-md-2 d-grid">
-                <button className="btn btn-success" type="submit">Search</button>
+                <button className="btn btn-primary" type="submit">Search</button>
               </div>
             </form>
             {error && <div className="alert alert-danger mt-3 mb-0" role="alert">{error}</div>}
@@ -76,7 +67,7 @@ export default function PublicHomePage() {
         <section className="container py-5">
           <div className="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
             <div><p className="eyebrow">OUR FLEET</p><h2 className="h3 mb-0">Explore our vehicles</h2></div>
-            <Link className="btn btn-outline-success" to="/fleet">View all vehicles</Link>
+            <Link className="btn btn-outline-dark" to="/fleet">View all vehicles</Link>
           </div>
           <p className="text-secondary">Browse our published fleet. Availability is checked for your selected dates.</p>
           <PublicFleet featured />
@@ -99,16 +90,13 @@ export default function PublicHomePage() {
             ))}
           </div>
         </section>
-      </main>
-      <footer className="public-site-footer">
-        <div className="container d-flex flex-wrap justify-content-between gap-3">
-          <span>AJ Car Rentals</span>
-          <nav className="d-flex flex-wrap gap-3" aria-label="Footer navigation">
-            <Link to="/book">Book a vehicle</Link>
-            <Link to="/login">Staff portal</Link>
-          </nav>
+      <section className="public-cta" style={{ backgroundImage: `linear-gradient(90deg, rgb(0 0 0 / 80%), rgb(0 0 0 / 35%)), url(${ctaImage})` }}>
+        <div className="container">
+          <h2>Ready to hit the road?</h2>
+          <p>Send a booking request and our team will confirm your reservation.</p>
+          <Link className="btn btn-primary btn-lg" to="/book">Book Now</Link>
         </div>
-      </footer>
-    </div>
+      </section>
+    </PublicLayout>
   );
 }

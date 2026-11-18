@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { apiRequest, apiResourceUrl } from '../api.js';
 import { formatColomboDateTime } from '../date-time.js';
 import { useAuth } from '../auth/AuthContext.jsx';
+import { staffWhatsAppUrl } from '../whatsapp.js';
 
 function money(value, currency) {
   return value == null ? '—' : `${currency} ${value}`;
@@ -80,6 +81,20 @@ export default function BookingDetailPage() {
 
   useEffect(() => { void load(); }, [load]);
 
+  const retryWhatsApp = async () => {
+    setSaving(true);
+    setError('');
+    try {
+      await apiRequest(`/v1/whatsapp/bookings/${id}/retry`, { method: 'POST' });
+      await load();
+      setNotice('WhatsApp message retry requested. Check the status below; it is not delivered until WhatsApp confirms.');
+    } catch (requestError) {
+      setError(requestError.message);
+    } finally {
+      setSaving(false);
+    }
+  };
+
   const performAction = async () => {
     setSaving(true);
     setError('');
@@ -123,6 +138,20 @@ export default function BookingDetailPage() {
   ].some((permission) => permissions.includes(permission));
   const canAdjustPricing = permissions.includes('bookings.pricing.adjust');
   const canSeeInternal = permissions.includes('bookings.view');
+  const canManageWhatsApp = permissions.includes('whatsapp.manage');
+  const whatsappMessages = booking.whatsappMessages ?? [];
+  const hasFailedMessage = whatsappMessages.some((message) => message.status === 'FAILED');
+  const contactUrl = booking.customer?.mobileNumber
+    ? staffWhatsAppUrl(
+      booking.customer.mobileNumber,
+      `Hello ${booking.customer.fullName ?? ''}, this is AJ Car Rentals regarding your booking ${booking.reference}.`,
+    )
+    : null;
+  const consentLabel = !booking.whatsappConsent
+    ? 'No consent given'
+    : booking.whatsappConsentRevokedAt
+      ? `Withdrawn ${formatColomboDateTime(booking.whatsappConsentRevokedAt)}`
+      : `Given ${formatColomboDateTime(booking.whatsappConsentAt)}`;
 
   return (
     <>
@@ -139,7 +168,7 @@ export default function BookingDetailPage() {
             <button type="button" className="btn btn-outline-warning" onClick={() => setAction('review')}>Review</button>
           )}
           {['PENDING', 'UNDER_REVIEW'].includes(booking.status) && canConfirm && (
-            <button type="button" className="btn btn-success" onClick={() => setAction('confirm')}>Confirm</button>
+            <button type="button" className="btn btn-primary" onClick={() => setAction('confirm')}>Confirm</button>
           )}
           {['PENDING', 'UNDER_REVIEW'].includes(booking.status) && canReject && (
             <button type="button" className="btn btn-outline-danger" onClick={() => setAction('reject')}>Reject</button>
@@ -154,7 +183,7 @@ export default function BookingDetailPage() {
             <button type="button" className="btn btn-outline-danger" onClick={() => setAction('no-show')}>Mark no-show</button>
           )}
           {canUseRentalOperations && ['CONFIRMED', 'HANDED_OVER', 'RETURNED', 'COMPLETED'].includes(booking.status) && (
-            <Link className="btn btn-outline-success" to={`/rental-operations/${booking.id}`}>
+            <Link className="btn btn-outline-primary" to={`/rental-operations/${booking.id}`}>
               Open rental operations
             </Link>
           )}
@@ -187,6 +216,48 @@ export default function BookingDetailPage() {
             {booking.cancellationReason && <div className="alert alert-secondary mt-3 mb-0">{booking.cancellationReason}</div>}
           </Section>
         </div>
+        {(booking.customer?.mobileNumber || whatsappMessages.length > 0) && (
+          <div className="col-12">
+            <Section title="WhatsApp">
+              <div className="d-grid gap-2">
+                <Field label="Customer consent">{consentLabel}</Field>
+                <Field label="Customer opened WhatsApp">
+                  {booking.whatsappOpenedAt ? formatColomboDateTime(booking.whatsappOpenedAt) : 'Not recorded'}
+                </Field>
+              </div>
+              {contactUrl && (
+                <a className="btn btn-outline-primary mt-3" href={contactUrl} target="_blank" rel="noopener noreferrer">
+                  Contact customer on WhatsApp
+                </a>
+              )}
+              {whatsappMessages.length > 0 ? (
+                <div className="table-responsive mt-3">
+                  <table className="table table-sm align-middle mb-0">
+                    <thead><tr><th>Message</th><th>Status</th><th>Sent</th><th>Delivered</th><th>Detail</th></tr></thead>
+                    <tbody>
+                      {whatsappMessages.map((message) => (
+                        <tr key={message.id}>
+                          <td>{message.category.replaceAll('_', ' ')}</td>
+                          <td><span className={`badge ${message.status === 'FAILED' ? 'text-bg-danger' : ['DELIVERED', 'READ'].includes(message.status) ? 'text-bg-success' : 'text-bg-secondary'}`}>{message.status}</span></td>
+                          <td>{message.sentAt ? formatColomboDateTime(message.sentAt) : '—'}</td>
+                          <td>{message.deliveredAt ? formatColomboDateTime(message.deliveredAt) : '—'}</td>
+                          <td className="small">{message.errorMessage ?? (message.retryCount ? `${message.retryCount} retries` : '')}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <p className="small text-secondary mt-3 mb-0">No automatic WhatsApp message has been queued for this booking.</p>
+              )}
+              {canManageWhatsApp && hasFailedMessage && (
+                <button type="button" className="btn btn-outline-danger mt-3" disabled={saving} onClick={retryWhatsApp}>
+                  Retry failed message
+                </button>
+              )}
+            </Section>
+          </div>
+        )}
         <div className="col-12 col-xl-6">
           <Section title="Vehicle and rental">
             <div className="d-flex gap-3 align-items-start mb-3">
@@ -323,7 +394,7 @@ export default function BookingDetailPage() {
             <Section title="Rental operation records">
               <p className="text-secondary">Handover and return records are managed through the guided rental-operations workflow.</p>
               {canUseRentalOperations && (
-                <Link className="btn btn-outline-success" to={`/rental-operations/${booking.id}`}>
+                <Link className="btn btn-outline-primary" to={`/rental-operations/${booking.id}`}>
                   View operation record
                 </Link>
               )}
@@ -365,7 +436,7 @@ export default function BookingDetailPage() {
             <div className="d-flex justify-content-end gap-2 mt-4">
               <button type="button" className="btn btn-outline-secondary" onClick={() => setAction('')} disabled={saving}>Keep booking</button>
               <button type="button"
-                className={`btn ${['reject', 'cancel', 'no-show'].includes(action) ? 'btn-danger' : 'btn-success'}`}
+                className={`btn ${['reject', 'cancel', 'no-show'].includes(action) ? 'btn-danger' : 'btn-primary'}`}
                 onClick={performAction}
                 disabled={saving || (action !== 'confirm' && !reason.trim())}>
                 {saving ? 'Saving…' : actionLabels[action]}

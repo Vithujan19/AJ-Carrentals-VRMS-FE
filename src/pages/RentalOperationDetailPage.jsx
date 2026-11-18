@@ -838,7 +838,7 @@ export default function RentalOperationDetailPage() {
                 <input id="verification-rejection" className="form-control" maxLength={1000}
                   value={rejectionReason} onChange={(event) => setRejectionReason(event.target.value)} />
                 <div className="d-flex flex-wrap gap-2 mt-3">
-                  <button type="button" className="btn btn-success" disabled={saving}
+                  <button type="button" className="btn btn-primary" disabled={saving}
                     onClick={() => verifyCustomer('VERIFIED')}>Mark verified</button>
                   <button type="button" className="btn btn-outline-danger" disabled={saving || !rejectionReason.trim()}
                     onClick={() => verifyCustomer('REJECTED')}>Reject verification</button>
@@ -856,7 +856,7 @@ export default function RentalOperationDetailPage() {
             {operation && !draft && canStart && (
               <div className="alert alert-info">
                 <p className="mb-2">Start a draft to record the inspection, mileage, fuel level, accessories and photographs.</p>
-                <button type="button" className="btn btn-success" disabled={saving} onClick={startDraft}>
+                <button type="button" className="btn btn-primary" disabled={saving} onClick={startDraft}>
                   {saving ? 'Starting…' : `Start ${operation}`}
                 </button>
               </div>
@@ -1040,7 +1040,7 @@ export default function RentalOperationDetailPage() {
                       <input id="inspection-caption" className="form-control" name="caption" maxLength={255} />
                     </div>
                     <div className="col-12 col-lg-2">
-                      <button className="btn btn-outline-success w-100" disabled={saving}>Upload</button>
+                      <button className="btn btn-outline-primary w-100" disabled={saving}>Upload</button>
                     </div>
                   </form>
                 </div>
@@ -1052,10 +1052,10 @@ export default function RentalOperationDetailPage() {
                     <span className="form-check-label">Customer acknowledgement has been obtained for this inspection and operation.</span>
                   </label>
                   <div className="d-flex justify-content-end gap-2">
-                    <button type="button" className="btn btn-outline-success" disabled={saving} onClick={saveDraft}>
+                    <button type="button" className="btn btn-outline-primary" disabled={saving} onClick={saveDraft}>
                       {saving ? 'Saving…' : 'Save draft'}
                     </button>
-                    <button type="button" className="btn btn-success" disabled={saving || !acknowledged}
+                    <button type="button" className="btn btn-primary" disabled={saving || !acknowledged}
                       onClick={completeOperation}>
                       {saving ? 'Completing…' : `Complete ${operation}`}
                     </button>
@@ -1114,7 +1114,7 @@ export default function RentalOperationDetailPage() {
                                     [charge.id]: event.target.value,
                                   })} />
                                 <div className="d-flex gap-1">
-                                  <button type="button" className="btn btn-sm btn-success" disabled={saving}
+                                  <button type="button" className="btn btn-sm btn-primary" disabled={saving}
                                     onClick={() => decideCharge(charge, 'APPROVED')}>Approve</button>
                                   <button type="button" className="btn btn-sm btn-outline-danger" disabled={saving}
                                     onClick={() => decideCharge(charge, 'REJECTED')}>Reject</button>
@@ -1164,7 +1164,7 @@ export default function RentalOperationDetailPage() {
                       onChange={(event) => setChargeInput({ ...chargeInput, reason: event.target.value })} />
                   </div>
                   <div className="col-12 text-end">
-                    <button className="btn btn-outline-success" disabled={saving}>Propose charge</button>
+                    <button className="btn btn-outline-primary" disabled={saving}>Propose charge</button>
                   </div>
                 </form>
               )}
@@ -1210,7 +1210,7 @@ export default function RentalOperationDetailPage() {
                           })} />
                       </div>
                       <div className="col-12 col-md-3 d-flex align-items-end gap-2">
-                        <button type="button" className="btn btn-success" disabled={saving}
+                        <button type="button" className="btn btn-primary" disabled={saving}
                           onClick={() => decideDamage(damage, 'APPROVED')}>Approve charge</button>
                         <button type="button" className="btn btn-outline-danger" disabled={saving}
                           onClick={() => decideDamage(damage, 'REJECTED')}>Reject</button>
@@ -1243,7 +1243,7 @@ export default function RentalOperationDetailPage() {
                       onChange={(event) => setDepositApplication({ ...depositApplication, reason: event.target.value })} />
                   </div>
                   <div className="col-12 col-md-2 d-flex align-items-end">
-                    <button className="btn btn-outline-success w-100" disabled={saving}>Apply deposit</button>
+                    <button className="btn btn-outline-primary w-100" disabled={saving}>Apply deposit</button>
                   </div>
                 </form>
               )}
@@ -1289,7 +1289,7 @@ export default function RentalOperationDetailPage() {
                       onChange={(event) => setPaymentInput({ ...paymentInput, notes: event.target.value })} />
                   </div>
                   <div className="col-12 text-end">
-                    <button className="btn btn-success" disabled={saving}>Record payment</button>
+                    <button className="btn btn-primary" disabled={saving}>Record payment</button>
                   </div>
                 </form>
               </Section>
@@ -1339,7 +1339,7 @@ export default function RentalOperationDetailPage() {
                       }
                     }}>
                       <input className="form-control form-control-sm" type="file" name="receipt" accept="image/*,application/pdf" required />
-                      <button className="btn btn-sm btn-outline-success" disabled={saving}>Upload receipt</button>
+                      <button className="btn btn-sm btn-outline-primary" disabled={saving}>Upload receipt</button>
                     </form>
                   )}
                   {canRefund && payment.direction === 'COLLECTION' && payment.status === 'COMPLETED' && payment.allocations.map((allocation) => (
@@ -1376,7 +1376,7 @@ export default function RentalOperationDetailPage() {
       {canFinalize && booking.status === 'RETURNED' && (
         <Section title="Rental close-out" className="mt-3">
           <p className="text-secondary">Finalization requires a completed return, resolved charge decisions, settled deposit balance and the configured balance policy.</p>
-          <button type="button" className="btn btn-success" disabled={saving || pendingCharges.length > 0 || pendingDamages.length > 0}
+          <button type="button" className="btn btn-primary" disabled={saving || pendingCharges.length > 0 || pendingDamages.length > 0}
             onClick={finalizeRental}>Finalize rental</button>
         </Section>
       )}

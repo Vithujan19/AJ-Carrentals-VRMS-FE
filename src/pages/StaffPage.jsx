@@ -119,7 +119,7 @@ function StaffRow({
             >
               {roles.map((role) => <option key={role.id} value={role.id}>{role.name}</option>)}
             </select>
-            <button className="btn btn-sm btn-outline-success mt-2" onClick={updateRoles} disabled={busy}>
+            <button className="btn btn-sm btn-outline-primary mt-2" onClick={updateRoles} disabled={busy}>
               Save roles
             </button>
           </>
@@ -143,7 +143,7 @@ function StaffRow({
         {allowPasswordTokens && (
           <div className="mt-2">
             {['ACTIVE', 'PENDING_SETUP'].includes(staff.status) && (
-              <button className="btn btn-sm btn-outline-success me-2" onClick={generatePasswordToken} disabled={busy}>
+              <button className="btn btn-sm btn-outline-primary me-2" onClick={generatePasswordToken} disabled={busy}>
                 Generate {staff.status === 'PENDING_SETUP' ? 'setup' : 'reset'} token
               </button>
             )}
@@ -283,7 +283,7 @@ export default function StaffPage() {
               </select>
             </div>
             <div className="col-12 col-md-2">
-              <button className="btn btn-success w-100" disabled={saving || !roles.length}>
+              <button className="btn btn-primary w-100" disabled={saving || !roles.length}>
                 {saving ? 'Creating…' : 'Create staff'}
               </button>
             </div>

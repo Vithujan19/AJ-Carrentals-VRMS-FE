@@ -51,7 +51,7 @@ export default function ChangePasswordPage() {
           <input id="confirm-password" type="password" autoComplete="new-password" className="form-control mb-4"
             minLength={12} maxLength={128} value={confirmPassword}
             onChange={(event) => setConfirmPassword(event.target.value)} required />
-          <button className="btn btn-success" disabled={saving}>{saving ? 'Updating…' : 'Update password'}</button>
+          <button className="btn btn-primary" disabled={saving}>{saving ? 'Updating…' : 'Update password'}</button>
         </form>
       </section>
     </>

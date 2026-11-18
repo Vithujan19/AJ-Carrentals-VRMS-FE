@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import logo from '../assets/logo.png';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext.jsx';
 
@@ -26,7 +27,7 @@ export default function LoginPage() {
     <main className="login-page">
       <section className="login-card">
         <div className="brand-lockup mb-4">
-          <span className="brand-mark">AJ</span>
+          <img className="brand-logo" src={logo} alt="AJ Car Rentals" />
           <span>
             <strong>AJ Car Rentals</strong>
             <small>Staff portal</small>
@@ -63,7 +64,7 @@ export default function LoginPage() {
               required
             />
           </div>
-          <button className="btn btn-success btn-lg w-100" disabled={submitting}>
+          <button className="btn btn-primary btn-lg w-100" disabled={submitting}>
             {submitting ? 'Signing in…' : 'Sign in'}
           </button>
         </form>

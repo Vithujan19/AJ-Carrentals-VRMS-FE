@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { apiRequest } from '../api.js';
 import { addCalendarDays, colomboDateTimeToIso, formatColomboDateTime } from '../date-time.js';
 import { useAuth } from '../auth/AuthContext.jsx';
@@ -41,8 +41,10 @@ export default function BookingsPage() {
     permissions.includes('bookings.pricing.view') || permissions.includes('payments.view');
   const canViewVehicles =
     permissions.includes('vehicles.view') || permissions.includes('vehicles.view.assigned');
-  const [filters, setFilters] = useState(emptyFilters);
-  const [appliedFilters, setAppliedFilters] = useState(emptyFilters);
+  const [searchParams] = useSearchParams();
+  const initialFilters = { ...emptyFilters, status: searchParams.get('status') ?? '' };
+  const [filters, setFilters] = useState(initialFilters);
+  const [appliedFilters, setAppliedFilters] = useState(initialFilters);
   const [items, setItems] = useState([]);
   const [pagination, setPagination] = useState({ page: 1, pages: 1, total: 0 });
   const [vehicles, setVehicles] = useState([]);
@@ -138,12 +140,12 @@ export default function BookingsPage() {
           <p className="text-secondary mb-0">Review requests, protect vehicle availability and manage rental status.</p>
         </div>
         <div className="d-flex flex-wrap gap-2">
-          <button type="button" className={`btn ${view === 'list' ? 'btn-success' : 'btn-outline-success'}`}
+          <button type="button" className={`btn ${view === 'list' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setView('list')}>List</button>
-          <button type="button" className={`btn ${view === 'calendar' ? 'btn-success' : 'btn-outline-success'}`}
+          <button type="button" className={`btn ${view === 'calendar' ? 'btn-primary' : 'btn-outline-primary'}`}
             onClick={() => setView('calendar')}>Calendar</button>
           {canCreate && (
-            <button type="button" className="btn btn-success"
+            <button type="button" className="btn btn-primary"
               onClick={() => setShowCreate((current) => !current)}>
               {showCreate ? 'Close form' : 'New booking'}
             </button>
@@ -221,7 +223,7 @@ export default function BookingsPage() {
               </div>
               <div className="col-12 d-flex gap-2 justify-content-end">
                 <button className="btn btn-outline-secondary" type="button" onClick={clearFilters}>Clear filters</button>
-                <button className="btn btn-outline-success" type="submit">Apply filters</button>
+                <button className="btn btn-outline-primary" type="submit">Apply filters</button>
               </div>
             </form>
           </section>
@@ -279,7 +281,7 @@ export default function BookingsPage() {
                           <td>{booking.financialSummary?.paymentStatus ?? '—'}</td>
                         )}
                         <td><span className={`badge ${badgeClass(booking.status)}`}>{booking.status.replace('_', ' ')}</span></td>
-                        <td><Link className="btn btn-sm btn-outline-success" to={`/bookings/${booking.id}`}>Open</Link></td>
+                        <td><Link className="btn btn-sm btn-outline-primary" to={`/bookings/${booking.id}`}>Open</Link></td>
                       </tr>
                     ))}
                   </tbody>

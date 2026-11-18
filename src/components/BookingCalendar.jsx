@@ -131,7 +131,7 @@ export default function BookingCalendar({ initialStatus = '' }) {
         </div>
         <div className="btn-group" role="group" aria-label="Calendar view">
           {['month', 'week', 'day'].map((value) => (
-            <button type="button" className={`btn btn-sm ${view === value ? 'btn-success' : 'btn-outline-success'}`}
+            <button type="button" className={`btn btn-sm ${view === value ? 'btn-primary' : 'btn-outline-primary'}`}
               key={value} onClick={() => setView(value)}>{value[0].toUpperCase() + value.slice(1)}</button>
           ))}
         </div>
