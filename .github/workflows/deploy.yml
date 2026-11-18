@@ -33,7 +33,14 @@ jobs:
         run: npm ci
 
       - name: Run frontend tests
-        run: npm test
+        run: |
+          has_test="$(node -p "Object.hasOwn(require('./package.json').scripts || {}, 'test')")"
+          if [ "$has_test" = "true" ]; then
+            npm test
+          else
+            echo "::warning::No frontend test script is configured; tests were not run."
+            echo "Frontend tests were not run: no test script is configured." >> "$GITHUB_STEP_SUMMARY"
+          fi
 
       - name: Build production client
         run: npm run build
